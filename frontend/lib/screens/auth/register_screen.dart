@@ -17,7 +17,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   void _register() async {
     Map<String, dynamic> data = {
-      "user_name": nameController.text,
+      "first_name": nameController.text.split(' ')[0],
+      "last_name": nameController.text.split(' ').length > 1
+          ? nameController.text.split(' ')[1]
+          : "",
       "email": emailController.text,
       "phone_number": phoneController.text,
       "password": passwordController.text,
@@ -29,7 +32,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
     bool success = await authProvider.register(data);
     if (success) {
-      Navigator.pop(context);
+      Navigator.pushReplacementNamed(context, '/home');
     } else {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text("Registration failed")));

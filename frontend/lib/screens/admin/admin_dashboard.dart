@@ -1,11 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../providers/auth_provider.dart';
 
 class AdminDashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Replace with real admin dashboard data and navigation.
     return Scaffold(
-      appBar: AppBar(title: Text('Admin Dashboard')),
+      appBar: AppBar(
+        title: Text('Admin Dashboard'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () async {
+              await Provider.of<AuthProvider>(context, listen: false).logout();
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                '/login',
+                (route) => false,
+              );
+            },
+          ),
+        ],
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

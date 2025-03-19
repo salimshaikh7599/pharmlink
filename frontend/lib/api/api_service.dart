@@ -5,9 +5,27 @@ import '../utils/constants.dart';
 
 class ApiService {
   static const String baseUrl = API_BASE_URL;
+  static String? _authToken;
+
+  static Future<void> setAuthToken(String token) async {
+    _authToken = token;
+  }
+
+  static Map<String, String> _getHeaders() {
+    Map<String, String> headers = {
+      "Content-Type": "application/json",
+    };
+    if (_authToken != null) {
+      headers["Authorization"] = "Bearer $_authToken";
+    }
+    return headers;
+  }
 
   static Future<dynamic> get(String endpoint) async {
-    final response = await http.get(Uri.parse("$baseUrl/$endpoint"));
+    final response = await http.get(
+      Uri.parse("$baseUrl/$endpoint"),
+      headers: _getHeaders(),
+    );
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
     } else {
@@ -15,10 +33,11 @@ class ApiService {
     }
   }
 
-  static Future<dynamic> post(String endpoint, Map<String, dynamic> data) async {
+  static Future<dynamic> post(
+      String endpoint, Map<String, dynamic> data) async {
     final response = await http.post(
       Uri.parse("$baseUrl/$endpoint"),
-      headers: {"Content-Type": "application/json"},
+      headers: _getHeaders(),
       body: jsonEncode(data),
     );
     if (response.statusCode == 200 || response.statusCode == 201) {

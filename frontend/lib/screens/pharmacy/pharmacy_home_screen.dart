@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../providers/auth_provider.dart';
 import '../../utils/theme.dart';
 
 class PharmacyHomeScreen extends StatelessWidget {
@@ -9,6 +11,20 @@ class PharmacyHomeScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text('Pharmacy Dashboard'),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.logout),
+              onPressed: () async {
+                await Provider.of<AuthProvider>(context, listen: false)
+                    .logout();
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  '/login',
+                  (route) => false,
+                );
+              },
+            ),
+          ],
         ),
         body: Center(
           child: Column(

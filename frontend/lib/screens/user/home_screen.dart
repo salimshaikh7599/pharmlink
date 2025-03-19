@@ -1,5 +1,7 @@
 // lib/screens/user/home_screen.dart
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../providers/auth_provider.dart';
 import 'package:pharmlink_app/models/product_model.dart';
 import '../../widgets/custom_app_bar.dart';
 import '../../widgets/banner_slider.dart';
@@ -9,7 +11,22 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'Pharmlink'),
+      appBar: AppBar(
+        title: Text('Pharmlink'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () async {
+              await Provider.of<AuthProvider>(context, listen: false).logout();
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                '/login',
+                (route) => false,
+              );
+            },
+          ),
+        ],
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
