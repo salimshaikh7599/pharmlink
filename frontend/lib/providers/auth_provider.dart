@@ -16,7 +16,7 @@ class AuthProvider extends ChangeNotifier {
   Future<bool> isAuthorized() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? storedToken = prefs.getString("token");
-
+    print("Stored token: $storedToken");
     if (storedToken != null) {
       try {
         final response = await AuthApi().validate(storedToken);

@@ -13,6 +13,9 @@ import 'screens/pharmacy/analytics_screen.dart';
 import 'screens/admin/admin_dashboard.dart';
 import 'screens/admin/manage_pharmacy.dart';
 import 'screens/admin/approval_screen.dart';
+import 'screens/product/product_details_screen.dart';
+import 'screens/product/product_add_edit_screen.dart';
+import 'models/product_model.dart';
 
 final Map<String, WidgetBuilder> appRoutes = {
   '/': (context) => SplashScreen(),
@@ -31,4 +34,11 @@ final Map<String, WidgetBuilder> appRoutes = {
   '/admin/dashboard': (context) => AdminDashboard(),
   '/admin/manage': (context) => ManagePharmacy(),
   '/admin/approval': (context) => ApprovalScreen(),
+  '/product/details': (context) => ProductDetailsScreen(
+        product: ModalRoute.of(context)!.settings.arguments as Product,
+      ),
+  '/product/add': (context) => ProductAddEditScreen(),
+  '/product/edit': (context) => ProductAddEditScreen(
+        product: ModalRoute.of(context)!.settings.arguments as Product,
+      ),
 };

@@ -2,6 +2,7 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
+const sequelize = require("../config/sequelize");
 require("dotenv").config();
 
 exports.register = async (req, res, next) => {
